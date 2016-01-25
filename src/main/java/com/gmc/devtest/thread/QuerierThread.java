@@ -33,13 +33,13 @@ public class QuerierThread extends AbstractQuerierMultiConnection implements Run
         ResultSet resultSet=null;
         Connection conn =null;
 
-        ConnectionManager connectionManager = new ConnectionManager();
+//        ConnectionManager connectionManager = new ConnectionManager();
 
         try {
 
             startQueryTime = System.currentTimeMillis();
 
-            conn =  connectionManager.getConnection();
+            conn =  getConnection();
             statement = conn.createStatement();
             resultSet = statement.executeQuery(QUERY);
             Object[] results = new Object[100];
