@@ -14,15 +14,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Observable;
 
+import com.gmc.devtest.jdbc.AbstractQuerierMultiConnection;
 import com.gmc.devtest.jdbc.ConnectionManager;
+import com.gmc.devtest.jdbc.Queryable;
 
-public class QuerierThread extends Observable implements Queryable,Runnable {
+public class QuerierThread extends AbstractQuerierMultiConnection implements Runnable {
 
-    private static final String QUERY = "SELECT *  FROM TempCandidate LIMIT 0,10";
-
-    private Long _queryTime;
+    private static final String QUERY = "SELECT *  FROM SampleTable";
 
     public void doQuery(){
 
@@ -30,14 +31,18 @@ public class QuerierThread extends Observable implements Queryable,Runnable {
 
         Statement statement=null;
         ResultSet resultSet=null;
+        Connection conn =null;
+
+        ConnectionManager connectionManager = new ConnectionManager();
 
         try {
 
             startQueryTime = System.currentTimeMillis();
 
-            statement = getConnection().createStatement();
+            conn =  connectionManager.getConnection();
+            statement = conn.createStatement();
             resultSet = statement.executeQuery(QUERY);
-            Object[] results = new Object[10];
+            Object[] results = new Object[100];
             int i = 0;
             while (resultSet.next()){
 
@@ -51,7 +56,6 @@ public class QuerierThread extends Observable implements Queryable,Runnable {
 
                 results[i] = row;
                 i++;
-
 //                System.out.println(" Row -> " + Arrays.deepToString(row)) ;
 
             }
@@ -60,7 +64,7 @@ public class QuerierThread extends Observable implements Queryable,Runnable {
 
             endQueryTime = System.currentTimeMillis();
 
-            _queryTime = endQueryTime - startQueryTime;
+            setQueryTime(endQueryTime - startQueryTime);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,24 +85,21 @@ public class QuerierThread extends Observable implements Queryable,Runnable {
                     e.printStackTrace();
                 }
             }
+
+            close(conn);
+
         }
 
     }
 
-    public Long getQueryTime() {
-        return _queryTime;
-    }
-
     public void run() {
+
         doQuery();
         setChanged();
         notifyObservers();
 
-        System.out.println("Finalizó el hilo: " + Thread.currentThread().getName() +", con tiempo de respuesta : "+_queryTime+" ms" );
-    }
+        System.out.println("Finalizó el Thread: " + Thread.currentThread().getName() +", con tiempo de respuesta : "+getQueryTime()+" ms" );
 
-    private Connection getConnection(){
-        return ConnectionManager.getConnection();
     }
 
 }

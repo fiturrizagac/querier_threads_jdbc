@@ -8,7 +8,7 @@
  * <p/>
  * All rights reserved.
  */
-package com.gmc.devtest.measure;
+package com.gmc.devtest.thread;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -16,22 +16,22 @@ import java.util.Observer;
 import com.gmc.devtest.jdbc.ConnectionManager;
 import com.gmc.devtest.thread.QuerierThread;
 
-public class MeterResponses implements Observer {
+public class LauncherQueries implements Observer {
 
     private int _numberOfThreads;
     private QuerierThread[] _queriers;
     private long _totalResponseTime;
 
-    public MeterResponses(int threads) {
+    public LauncherQueries(int threads) {
         _numberOfThreads = threads;
         _queriers = new QuerierThread[threads];
     }
 
-    public Long calculateResponseTime(){
+    public void launchQueries(){
         for (int i=0;i<_numberOfThreads;i++ ){
             _queriers[i] =  new QuerierThread();
             _queriers[i].addObserver(this);
-            Thread localThread =  new Thread(_queriers[i],"Thread "+i );
+            Thread localThread =  new Thread(_queriers[i], " Thread "+i );
             localThread.start();
             try {
                 localThread.join();
@@ -39,9 +39,6 @@ public class MeterResponses implements Observer {
                 e.printStackTrace();
             }
         }
-        ConnectionManager.closeConnection();
-        return _totalResponseTime;
-
     }
 
     public void update(final Observable o, final Object arg) {
@@ -53,4 +50,11 @@ public class MeterResponses implements Observer {
         }
     }
 
+    public int getNumberOfThreads() {
+        return _numberOfThreads;
+    }
+
+    public long getTotalResponseTime() {
+        return _totalResponseTime;
+    }
 }

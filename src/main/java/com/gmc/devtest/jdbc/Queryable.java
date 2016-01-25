@@ -8,7 +8,7 @@
  * <p/>
  * All rights reserved.
  */
-package com.gmc.devtest.thread;
+package com.gmc.devtest.jdbc;
 
 public interface Queryable {
 
