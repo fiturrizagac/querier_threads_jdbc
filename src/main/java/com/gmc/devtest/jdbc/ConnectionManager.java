@@ -15,55 +15,35 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.gmc.devtest.properties.AppProperties;
+import static com.gmc.devtest.properties.AppProperties.KeyProperty.USER;
+import static com.gmc.devtest.properties.AppProperties.KeyProperty.PASSWORD;
+import static com.gmc.devtest.properties.AppProperties.KeyProperty.URL;
+
+
 
 public class ConnectionManager {
 
+    public Connection getConnection(){
 
-    private static Connection _connection;
+        Connection _connection = null;
 
-    private String _url;
+        Properties properties =  new Properties();
+        properties.setProperty(ConnectionProperties.user.name(), AppProperties.getProperty(USER));
+        properties.setProperty(ConnectionProperties.password.name(),AppProperties.getProperty(PASSWORD));
 
-    private String _password;
+        try {
+            _connection = DriverManager.getConnection(AppProperties.getProperty(URL),properties);
 
-    private String _user;
+            System.out.println("open connection!!!");
 
-    DriverManager _driverManager;
+        }catch (SQLException e){
 
-    public static Connection getConnection(){
-
-        if(_connection == null){
-            Properties properties =  new Properties();
-            properties.setProperty(ConnectionProperties.user.name(),"DenmarkCandMng");
-            properties.setProperty(ConnectionProperties.password.name(),"DenmarkCandMng");
-            String url = "jdbc:mysql://localhost:3306/DenmarkCandMng";
-            try {
-                _connection = DriverManager.getConnection(url,properties);
-                System.out.println("open connection!!!");
-            }catch (SQLException e){
-
-            }
         }
         return _connection;
     }
 
-    public static synchronized  void closeConnection(){
-
-        if(_connection != null){
-
-            try {
-                _connection.close();
-                _connection = null;
-                System.out.printf("close connection!!!");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
-
-    enum ConnectionProperties{
+    public enum ConnectionProperties{
         user,
         password;
     }
