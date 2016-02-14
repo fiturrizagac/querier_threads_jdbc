@@ -10,7 +10,7 @@
  */
 package com.gmc.devtest;
 
-import com.gmc.devtest.dto.ResultDTO;
+import com.gmc.devtest.om.dto.ResultDTO;
 import com.gmc.devtest.properties.AppProperties;
 import com.gmc.devtest.thread.LauncherQueries;
 

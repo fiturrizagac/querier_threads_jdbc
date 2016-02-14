@@ -8,13 +8,16 @@
  * <p/>
  * All rights reserved.
  */
-package com.gmc.devtest.jdbc;
+package com.gmc.devtest.dao.impl.jdbc.mysql;
+
+import com.gmc.devtest.thread.QueryTimeCalculable;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Observable;
 
-public abstract class AbstractQuerierMultiConnection extends Observable implements Queryable, Connectable {
+@Deprecated
+public abstract class AbstractQuerierMultiConnection extends Observable implements QueryTimeCalculable, Connectable {
 
     private Long _queryTime;
 
@@ -36,7 +39,7 @@ public abstract class AbstractQuerierMultiConnection extends Observable implemen
 
     }
 
-    public Long getQueryTime() {
+    public Long getTotalQueryTime() {
         return _queryTime;
     }
 

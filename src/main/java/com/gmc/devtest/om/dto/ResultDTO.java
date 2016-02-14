@@ -8,7 +8,7 @@
  * <p/>
  * All rights reserved.
  */
-package com.gmc.devtest.dto;
+package com.gmc.devtest.om.dto;
 
 public class ResultDTO {
 

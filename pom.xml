@@ -8,19 +8,24 @@
     <artifactId>gmc-devtest</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
+    <properties>
+        <junit.version>4.12</junit.version>
+        <mysql.version>5.1.6</mysql.version>
+    </properties>
+
 
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.6</version>
+            <version>${mysql.version}</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
-            <version>4.8</version>
+            <version>${junit.version}</version>
         </dependency>
 
 

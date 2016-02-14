@@ -8,7 +8,7 @@
  * <p/>
  * All rights reserved.
  */
-package com.gmc.devtest.jdbc;
+package com.gmc.devtest.dao.impl.jdbc.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,8 +20,7 @@ import static com.gmc.devtest.properties.AppProperties.KeyProperty.USER;
 import static com.gmc.devtest.properties.AppProperties.KeyProperty.PASSWORD;
 import static com.gmc.devtest.properties.AppProperties.KeyProperty.URL;
 
-
-
+@Deprecated
 public class ConnectionManager {
 
     public Connection getConnection(){
