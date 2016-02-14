@@ -40,9 +40,9 @@ public class LauncherQueries implements Observer {
 
     public void update(final Observable o, final Object arg) {
         synchronized (this){
-            if(o instanceof CalculatorQueryTRThread){
-                CalculatorQueryTRThread qt = (CalculatorQueryTRThread)o;
-                _totalResponseTime+=qt.getTotalQueryTime();
+            if(o instanceof QueryTimeCalculable){
+                QueryTimeCalculable qtc = (QueryTimeCalculable)o;
+                _totalResponseTime+=qtc.getTotalQueryTime();
             }
         }
     }

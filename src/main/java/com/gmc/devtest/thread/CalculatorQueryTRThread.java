@@ -12,7 +12,6 @@ package com.gmc.devtest.thread;
 
 import java.util.Observable;
 
-import com.gmc.devtest.dao.impl.jdbc.mysql.QueryTimeCalculable;
 import com.gmc.devtest.service.SampleService;
 import com.gmc.devtest.service.impl.SampleServiceImpl;
 
@@ -101,7 +100,7 @@ public class CalculatorQueryTRThread extends Observable implements QueryTimeCalc
    }
    */
 
-    public void calculateQueryTime() {
+    public synchronized void calculateQueryTime() {
         _totalQueryResponseTime = _sampleService.calculateResponseTimeFromFindAll();
     }
 

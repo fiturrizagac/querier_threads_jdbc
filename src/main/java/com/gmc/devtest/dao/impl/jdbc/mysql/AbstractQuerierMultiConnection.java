@@ -10,6 +10,8 @@
  */
 package com.gmc.devtest.dao.impl.jdbc.mysql;
 
+import com.gmc.devtest.thread.QueryTimeCalculable;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Observable;
