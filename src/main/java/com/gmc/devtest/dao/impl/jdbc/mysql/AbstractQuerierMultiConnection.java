@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Observable;
 
+@Deprecated
 public abstract class AbstractQuerierMultiConnection extends Observable implements QueryTimeCalculable, Connectable {
 
     private Long _queryTime;

@@ -20,8 +20,7 @@ import static com.gmc.devtest.properties.AppProperties.KeyProperty.USER;
 import static com.gmc.devtest.properties.AppProperties.KeyProperty.PASSWORD;
 import static com.gmc.devtest.properties.AppProperties.KeyProperty.URL;
 
-
-
+@Deprecated
 public class ConnectionManager {
 
     public Connection getConnection(){

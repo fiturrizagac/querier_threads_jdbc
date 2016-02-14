@@ -10,20 +10,30 @@
  */
 package com.gmc.devtest.thread;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Observable;
 
-import com.gmc.devtest.dao.impl.jdbc.mysql.AbstractQuerierMultiConnection;
+import com.gmc.devtest.dao.impl.jdbc.mysql.QueryTimeCalculable;
+import com.gmc.devtest.service.SampleService;
+import com.gmc.devtest.service.impl.SampleServiceImpl;
 
-public class QuerierThread extends AbstractQuerierMultiConnection implements Runnable {
+public class CalculatorQueryTRThread extends Observable implements QueryTimeCalculable, Runnable {
 
-    private static final String QUERY = "SELECT *  FROM SampleTable";
+    //private static final String QUERY = "SELECT *  FROM SampleTable";
 
+    private SampleService _sampleService;
+
+    private Long _totalQueryResponseTime;
+
+    public CalculatorQueryTRThread() {
+        _sampleService = new SampleServiceImpl();
+    }
+
+    /*
     public void calculateQueryTime(){
 
+
         long startQueryTime, endQueryTime;
+
 
         Statement statement=null;
         ResultSet resultSet=null;
@@ -60,6 +70,8 @@ public class QuerierThread extends AbstractQuerierMultiConnection implements Run
 
             endQueryTime = System.currentTimeMillis();
 
+
+
             setQueryTime(endQueryTime - startQueryTime);
 
         } catch (SQLException e) {
@@ -86,6 +98,15 @@ public class QuerierThread extends AbstractQuerierMultiConnection implements Run
 
         }
 
+   }
+   */
+
+    public void calculateQueryTime() {
+        _totalQueryResponseTime = _sampleService.calculateResponseTimeFromFindAll();
+    }
+
+    public Long getTotalQueryTime() {
+        return _totalQueryResponseTime;
     }
 
     public void run() {
