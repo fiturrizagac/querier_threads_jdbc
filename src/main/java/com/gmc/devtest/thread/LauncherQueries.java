@@ -13,9 +13,6 @@ package com.gmc.devtest.thread;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.gmc.devtest.jdbc.ConnectionManager;
-import com.gmc.devtest.thread.QuerierThread;
-
 public class LauncherQueries implements Observer {
 
     private int _numberOfThreads;
@@ -45,7 +42,7 @@ public class LauncherQueries implements Observer {
         synchronized (this){
             if(o instanceof QuerierThread){
                 QuerierThread qt = (QuerierThread)o;
-                _totalResponseTime+=qt.getQueryTime();
+                _totalResponseTime+=qt.getTotalQueryTime();
             }
         }
     }

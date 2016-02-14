@@ -14,18 +14,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.Observable;
 
-import com.gmc.devtest.jdbc.AbstractQuerierMultiConnection;
-import com.gmc.devtest.jdbc.ConnectionManager;
-import com.gmc.devtest.jdbc.Queryable;
+import com.gmc.devtest.dao.impl.jdbc.mysql.AbstractQuerierMultiConnection;
 
 public class QuerierThread extends AbstractQuerierMultiConnection implements Runnable {
 
     private static final String QUERY = "SELECT *  FROM SampleTable";
 
-    public void doQuery(){
+    public void calculateQueryTime(){
 
         long startQueryTime, endQueryTime;
 
@@ -94,11 +90,11 @@ public class QuerierThread extends AbstractQuerierMultiConnection implements Run
 
     public void run() {
 
-        doQuery();
+        calculateQueryTime();
         setChanged();
         notifyObservers();
 
-        System.out.println("Finalizó el Thread: " + Thread.currentThread().getName() +", con tiempo de respuesta : "+getQueryTime()+" ms" );
+        System.out.println("Finalizó el Thread: " + Thread.currentThread().getName() +", con tiempo de respuesta : "+ getTotalQueryTime()+" ms" );
 
     }
 

@@ -8,7 +8,7 @@
  * <p/>
  * All rights reserved.
  */
-package com.gmc.devtest.jdbc;
+package com.gmc.devtest.dao.impl.jdbc.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

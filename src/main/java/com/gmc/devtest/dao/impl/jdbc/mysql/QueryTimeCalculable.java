@@ -8,12 +8,12 @@
  * <p/>
  * All rights reserved.
  */
-package com.gmc.devtest.jdbc;
+package com.gmc.devtest.dao.impl.jdbc.mysql;
 
-public interface Queryable {
+public interface QueryTimeCalculable {
 
-    void doQuery();
+    void calculateQueryTime();
 
-    Long getQueryTime();
+    Long getTotalQueryTime();
 
 }
