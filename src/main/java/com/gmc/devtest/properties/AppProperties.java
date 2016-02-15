@@ -14,14 +14,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class AppProperties extends Properties {
+public class AppProperties {
+
+    private static String PROPERTIES_FILE = "/properties/app.properties";
 
     private static Properties _properties;
 
-    public static void load() throws IOException {
-        InputStream is = AppProperties.class.getResourceAsStream("/properties/app.properties");
+    static {
+        InputStream is = AppProperties.class.getResourceAsStream(PROPERTIES_FILE);
         _properties = new Properties();
-        _properties.load(is);
+        try {
+            _properties.load(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static String getProperty(KeyProperty key){

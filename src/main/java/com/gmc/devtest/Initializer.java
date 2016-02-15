@@ -20,8 +20,6 @@ public class Initializer {
 
     public static void main(String[] args) throws Exception{
 
-        AppProperties.load();
-
         int quantity = AppProperties.getPropertyAsInteger(THREADS_NUMBER);
 
         ResultDTO optimalResult =  new ResultDTO(999999999999999999l);
