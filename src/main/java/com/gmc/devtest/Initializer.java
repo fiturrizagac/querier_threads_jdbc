@@ -13,14 +13,19 @@ package com.gmc.devtest;
 import com.gmc.devtest.om.dto.ResultDTO;
 import com.gmc.devtest.properties.AppProperties;
 import com.gmc.devtest.thread.LauncherQueries;
+import org.apache.log4j.Logger;
 
 import static com.gmc.devtest.properties.AppProperties.KeyProperty.THREADS_NUMBER;
 
 public class Initializer {
 
+    private static Logger _log = Logger.getLogger(Initializer.class);
+
     public static void main(String[] args) throws Exception{
 
         int quantity = AppProperties.getPropertyAsInteger(THREADS_NUMBER);
+
+        _log.debug("quantity + " + quantity);
 
         ResultDTO optimalResult =  new ResultDTO(999999999999999999l);
 
