@@ -10,9 +10,10 @@
  */
 package com.gmc.devtest;
 
-import com.gmc.devtest.om.dto.ResultDTO;
+import com.gmc.devtest.om.dto.ResultsDTO;
 import com.gmc.devtest.properties.AppProperties;
-import com.gmc.devtest.thread.LauncherQueries;
+import com.gmc.devtest.thread.LauncherQueryThreadsImpl;
+import com.gmc.devtest.thread.QueryThreadsLaunchable;
 import org.apache.log4j.Logger;
 
 import static com.gmc.devtest.properties.AppProperties.KeyProperty.THREADS_NUMBER;
@@ -23,28 +24,27 @@ public class Initializer {
 
     public static void main(String[] args) throws Exception{
 
-        int quantity = AppProperties.getPropertyAsInteger(THREADS_NUMBER);
+        int numberThreads = AppProperties.getPropertyAsInteger(THREADS_NUMBER);
 
-        _log.debug("quantity + " + quantity);
+        _log.debug("Starting measurement of response times until " + numberThreads + " threads.");
 
-        ResultDTO optimalResult =  new ResultDTO(999999999999999999l);
+        ResultsDTO optimalResult =  new ResultsDTO();
 
-        for (int i = 0; i < quantity;i++){
+        for (int i = 0; i < numberThreads;i++){
 
-            System.out.println("Escenario "+i +": "+(i+1)+" Threads.");
+            int currentNumberThreads = i+1;
 
-            LauncherQueries launcherQueries =  new LauncherQueries((i+1));
-            launcherQueries.launchQueries();
+            _log.debug("Launching "+ currentNumberThreads +" Threads.");
 
-            System.out.println("Tiempo de respuesta por "+launcherQueries.getNumberOfThreads()+" conexiones: " + launcherQueries.getTotalResponseTime() + " ms.");
-            System.out.println();
+            QueryThreadsLaunchable launcher =  new LauncherQueryThreadsImpl();
+            launcher.launchQueryThreads(currentNumberThreads);
 
+            _log.debug("Response time of "+ currentNumberThreads +" Threads -> "+launcher.getTotalResponseTime() +" ms.");
+            _log.debug("");
 
-            ResultDTO stageResult = new ResultDTO(
-                    "Escenario "+i,
-                    launcherQueries.getTotalResponseTime()/(double)launcherQueries.getNumberOfThreads(),
-                    launcherQueries.getNumberOfThreads(),
-                    launcherQueries.getTotalResponseTime());
+            ResultsDTO stageResult = new ResultsDTO(
+                    currentNumberThreads,
+                    launcher.getTotalResponseTime());
 
             if(optimalResult.getOptimalCalculate()>stageResult.getOptimalCalculate()){
                 optimalResult = stageResult;
@@ -52,9 +52,8 @@ public class Initializer {
 
         }
 
-        System.out.printf("El escenario más optimo es el "+optimalResult.getStage()+"-> N° de Threads : "+ optimalResult.getNumberOfThreads()
-                + ", y tiempo: "+optimalResult.getResponseTime()+" ms" );
-
+        _log.debug("Total response time most optimal is "+optimalResult.getResponseTime() +" ms, with "
+                + optimalResult.getNumberOfThreads() + " Threads.");
 
     }
 

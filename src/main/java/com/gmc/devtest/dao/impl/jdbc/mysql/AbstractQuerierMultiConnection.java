@@ -10,14 +10,14 @@
  */
 package com.gmc.devtest.dao.impl.jdbc.mysql;
 
-import com.gmc.devtest.thread.QueryTimeCalculable;
+import com.gmc.devtest.thread.ThreadQueryTimeResponseCalculable;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Observable;
 
 @Deprecated
-public abstract class AbstractQuerierMultiConnection extends Observable implements QueryTimeCalculable, Connectable {
+public abstract class AbstractQuerierMultiConnection extends Observable implements ThreadQueryTimeResponseCalculable, Connectable {
 
     private Long _queryTime;
 
@@ -39,7 +39,7 @@ public abstract class AbstractQuerierMultiConnection extends Observable implemen
 
     }
 
-    public Long getTotalQueryTime() {
+    public Long getQueryResponseTime() {
         return _queryTime;
     }
 

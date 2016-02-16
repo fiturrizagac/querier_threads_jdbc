@@ -10,38 +10,20 @@
  */
 package com.gmc.devtest.om.dto;
 
-public class ResultDTO {
+public class ResultsDTO {
 
-    private String _stage;
-    private double _optimalCalculate;
     private int _numberOfThreads;
     private long _responseTime;
 
-    public ResultDTO(final String stage, final double optimalCalculate, final int numberOfThreads, final long responseTime) {
-        _stage = stage;
-        _optimalCalculate = optimalCalculate;
+    public ResultsDTO(final int numberOfThreads, final long responseTime) {
         _numberOfThreads = numberOfThreads;
         _responseTime = responseTime;
     }
 
-    public ResultDTO(final double optimalCalculate) {
-        _optimalCalculate = optimalCalculate;
-    }
-
-    public String getStage() {
-        return _stage;
-    }
-
-    public void setStage(final String stage) {
-        _stage = stage;
-    }
+    public ResultsDTO(){}
 
     public double getOptimalCalculate() {
-        return _optimalCalculate;
-    }
-
-    public void setOptimalCalculate(final double optimalCalculate) {
-        _optimalCalculate = optimalCalculate;
+        return _responseTime!=0?(_responseTime / (double) _numberOfThreads):999999999;
     }
 
     public int getNumberOfThreads() {
