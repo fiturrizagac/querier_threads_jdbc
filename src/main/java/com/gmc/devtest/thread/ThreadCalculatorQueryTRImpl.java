@@ -14,16 +14,18 @@ import java.util.Observable;
 
 import com.gmc.devtest.service.SampleService;
 import com.gmc.devtest.service.impl.SampleServiceImpl;
+import org.apache.log4j.Logger;
 
-public class CalculatorQueryTRThread extends Observable implements QueryTimeCalculable, Runnable {
+public class ThreadCalculatorQueryTRImpl extends Observable implements ThreadQueryTimeResponseCalculable {
 
     //private static final String QUERY = "SELECT *  FROM SampleTable";
+    private static Logger _log = Logger.getLogger(ThreadCalculatorQueryTRImpl.class);
 
     private SampleService _sampleService;
 
-    private Long _totalQueryResponseTime;
+    private Long _queryResponseTime;
 
-    public CalculatorQueryTRThread() {
+    public ThreadCalculatorQueryTRImpl() {
         _sampleService = new SampleServiceImpl();
     }
 
@@ -101,11 +103,11 @@ public class CalculatorQueryTRThread extends Observable implements QueryTimeCalc
    */
 
     public synchronized void calculateQueryTime() {
-        _totalQueryResponseTime = _sampleService.calculateResponseTimeFromFindAll();
+        _queryResponseTime = _sampleService.calculateResponseTimeFromFindAll();
     }
 
-    public Long getTotalQueryTime() {
-        return _totalQueryResponseTime;
+    public Long getQueryResponseTime() {
+        return _queryResponseTime;
     }
 
     public void run() {
@@ -114,7 +116,7 @@ public class CalculatorQueryTRThread extends Observable implements QueryTimeCalc
         setChanged();
         notifyObservers();
 
-        System.out.println("Finalizó el Thread: " + Thread.currentThread().getName() +", con tiempo de respuesta : "+ getTotalQueryTime()+" ms" );
+        _log.debug("Finalizado, tiempo de respuesta: "+ _queryResponseTime +" ms");
 
     }
 

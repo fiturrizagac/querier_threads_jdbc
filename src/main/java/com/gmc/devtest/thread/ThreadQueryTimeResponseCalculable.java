@@ -10,10 +10,10 @@
  */
 package com.gmc.devtest.thread;
 
-public interface QueryTimeCalculable {
+public interface ThreadQueryTimeResponseCalculable extends Runnable {
 
     void calculateQueryTime();
 
-    Long getTotalQueryTime();
+    Long getQueryResponseTime();
 
 }

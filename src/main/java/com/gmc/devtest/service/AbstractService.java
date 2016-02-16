@@ -10,7 +10,7 @@ public abstract class AbstractService {
 
     private DAOFactory _daoFactory;
 
-    public DAOFactory getDaoFactory() {
+    protected DAOFactory getDaoFactory() {
         if(_daoFactory == null){
             // @TODO: load implementation from properties
             _daoFactory = new MockDAOFactoryImpl();
